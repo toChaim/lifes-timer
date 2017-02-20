@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Life's Timer</title>
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-primary">Life's Timer</h1>
+    <div class="row">
+      <div class="pie col">
+        <div id="controls">
+          <p><button id="btnStartPause" onclick="startPause()">Start</button></p>
+          <p id="display">0:00:00</p>
+          <button onclick="addTime(-60, 'display')">-</button>
+          <button onclick="addTime(60, 'display')">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="intervals">
+      <div class="interval row" id="0">
+          <span class="name col">Work</span>
+          <span class="time col">0:25:00</span>
+          <span class="btns col">
+            <button onclick="addTime(-60, '0')">-</button>
+            <button onclick="addTime(60, '0')">+</button>
+            </span>
+      </div>
+      <div class="interval row" id="1">
+          <span class="name col">Break</span>
+          <span class="time col">0:05:00</span>
+          <span class="btns col">
+            <button onclick="addTime(-60, '1')">-</button>
+            <button onclick="addTime(60, '1')">+</button>
+            </span>
+      </div>
+      <div class="interval row" id="2">
+          <span class="name col">End</span>
+          <span class="time col">Restart</span>
+          <span class="btns col"></span>
+      </div>
+      <form class="interval row" id="3">
+          <span class="name col">New</span>
+          <span class="time col">0:50:00</span>
+          <span class="btns col">
+            <button type="button" onclick="addTime(-60, '3')">-</button>
+            <button onclick="addTime(60, '3')">+</button>
+            </span>
+      </form>
+    </div>
+  </div>
+
+
+</body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script src="js/index.js"></script>
+</html>

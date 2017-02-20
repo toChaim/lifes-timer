@@ -1,0 +1,33 @@
+*{
+  text-align: center;
+}
+span{
+  width: 20%;
+}
+div{
+
+}
+button{
+  display: inline;
+}
+#btnStartPause{
+  width: 60px;
+}
+#controls{
+  position: relative;
+  top: 10%;
+}
+#display{
+  font-size: 2.20em;
+  font-weight: bold;
+  font-family: monospace;
+}
+.pie {
+  display: inline-block;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: yellowgreen;
+}
+.interval{
+  font-size: 1.4em;
+}
