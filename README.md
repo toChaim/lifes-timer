@@ -1,5 +1,6 @@
 # lifes-timer
 A simple time/schedule timer.
+https://tochaim.github.io/lifes-timer/
 
 MVP:
 ✓ Countdown timer
@@ -9,10 +10,16 @@ Rest button
 ✓ Use numbered intervals
 ✓ Stop or Restart at end
 
+next steps:
+- fix timeOfDay from GMT 24hour clock to AM/PM local time
+- switch from info on webPage to array for storing interval objects
+- use correct methode for displaying times
+- add button
+
 features to add:
 ✓ Sounds
-- Time of day
-- Add button
+✓ Time of day
+- Add button and Remove buttons
 - "Panic Panic Now before it's too late" message.
   This may be useful for putting message behind Countdown. May also be useful for Graphic.
   http://stackoverflow.com/questions/1191464/is-there-a-way-to-use-use-text-as-the-background-with-css

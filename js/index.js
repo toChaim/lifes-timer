@@ -1,4 +1,5 @@
 //Set variables
+const DAY = 24*60*60*1000;
 var running = false;
 var myTime;
 var sec = 0;
@@ -27,6 +28,14 @@ function timerAction() {
 
     //display time
     document.getElementById("display").innerHTML = formatTime(sec);
+    // need array of intervals
+    //loop through array
+    var timeOfDay = new Date().getTime();
+    timeOfDay = Math.floor(((timeOfDay-(Math.floor((timeOfDay/DAY))*DAY))/1000));
+    timeOfDay += readTime(document.getElementById(0).childNodes[3].innerHTML);
+    document.getElementById(0).childNodes[7].innerHTML = formatTime(timeOfDay);
+    timeOfDay += readTime(document.getElementById(1).childNodes[3].innerHTML);
+    document.getElementById(1).childNodes[7].innerHTML = formatTime(timeOfDay);
     sec--;
 }
 
@@ -52,7 +61,7 @@ function startPause() {
     		clearInterval(myTime);
             document.getElementById("btnStartPause").innerHTML = "Start";
         }else{
-        	myTime = setInterval(function(){ timerAction() }, 500);
+        	myTime = setInterval(function(){ timerAction() }, 1000);
             document.getElementById("btnStartPause").innerHTML = "Pause";
         }
         running = !running;
