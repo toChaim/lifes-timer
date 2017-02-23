@@ -1,5 +1,8 @@
 //Set variables
-const DAY = 24*60*60*1000;
+const SECOND = 1000;
+const MINUTE = 60*SECOND;
+const HOUR = 60*MINUTE
+const DAY = 24*HOUR;
 var running = false;
 var myTime;
 var sec = 0;
