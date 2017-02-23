@@ -11,14 +11,15 @@ Rest button
 ✓ Stop or Restart at end
 
 next steps:
-- fix timeOfDay from GMT 24hour clock to AM/PM local time
 - switch from info on webPage to array for storing interval objects
-- use correct methode for displaying times
+- use correct method for displaying times
 - add button
+- normalize times so they are all in seconds or milliseconds
 
 features to add:
 ✓ Sounds
 ✓ Time of day
+✓ fix timeOfDay from GMT 24hour clock to AM/PM local time
 - Add button and Remove buttons
 - "Panic Panic Now before it's too late" message.
   This may be useful for putting message behind Countdown. May also be useful for Graphic.

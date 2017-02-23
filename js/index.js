@@ -33,7 +33,8 @@ function timerAction() {
     document.getElementById("display").innerHTML = formatTime(sec);
     // need array of intervals
     //loop through array
-    var timeOfDay = new Date().getTime();
+    var newDate = new Date();
+    var timeOfDay = newDate.getTime() - newDate.getTimezoneOffset()*MINUTE;
     timeOfDay = Math.floor(((timeOfDay-(Math.floor((timeOfDay/DAY))*DAY))/1000));
     timeOfDay += readTime(document.getElementById(0).childNodes[3].innerHTML);
     document.getElementById(0).childNodes[7].innerHTML = formatTime(timeOfDay);
