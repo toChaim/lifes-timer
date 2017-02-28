@@ -43,6 +43,10 @@ function timerAction() {
     sec--;
 }
 
+function addInterval(){
+  alert("Hello");
+}
+
 function addTime(seconds, element){
   if(element == 'display'){
     console.log("seconds='" + seconds + "' and element='" + element + "'");
