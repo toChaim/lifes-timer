@@ -44,7 +44,13 @@ function timerAction() {
 }
 
 function addInterval(){
-  alert("Hello");
+  var parent = document.getElementById("intervals");
+  var newDiv = document.createElement("p");
+  var newName = document.createTextNode("This is the Name.");
+  var newTime = document.createTextNode("0:00:00");
+  newDiv.appendChild(newName);
+  newDiv.appendChild(newTime);
+  parent.appendChild(newDiv);
 }
 
 function addTime(seconds, element){
