@@ -45,7 +45,8 @@ function timerAction() {
 
 function addInterval(){
   var parent = document.getElementById("intervals");
-  var newDiv = document.createElement("p");
+  var newDiv = document.createElement("div");
+  newDiv.setAttribute("id","4")
   var newName = document.createTextNode("This is the Name.");
   var newTime = document.createTextNode("0:00:00");
   newDiv.appendChild(newName);
