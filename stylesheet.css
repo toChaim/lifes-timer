@@ -1,0 +1,14 @@
+h1{
+	text-align: center;
+}
+#clock{
+	width: 30vw;
+	height: 20vw;
+	margin: 0 auto;
+	border: 1px solid blue;
+	text-align: center;
+}
+#clock input{
+	font-size: 1.2em;
+	text-align: center;
+}
