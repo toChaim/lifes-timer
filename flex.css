@@ -1,0 +1,43 @@
+     body {
+        background-color: yellow;
+      }
+      header{
+      	display: flex;
+      	flex-direction: row;
+      	justify-content: space-around;
+      }
+      #clock{
+      	display: flex;
+      	flex-basis: 100%;
+
+      	justify-content: space-around;
+      }
+      main{
+      	display: flex;
+      	flex-direction: row;
+      	justify-content: space-around;
+      }
+      #lists{
+      	display: flex;
+      	flex-basis: 100%;
+      	justify-content: space-around;
+
+      }
+      td{
+      	text-align: center;
+      }
+      #lists, th, td{
+
+      	border: 1px dashed red;
+
+      }
+
+    @media (min-width: 700px) {
+      body {
+        background-color: pink;
+      }
+      #clock{
+      	flex-basis: 30%;
+      }
+
+    }

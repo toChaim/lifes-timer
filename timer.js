@@ -14,7 +14,6 @@ $(document).ready(function(){
 				{let dateObj;
 					dateObj = new Date();
 					this.mills = dateObj.getTime() - dateObj.getTimezoneOffset() * 60000;
-					console.log(dateObj.getTimezoneOffset() * 1000);
 				}
 			}else{
 				this.mills = mills;
