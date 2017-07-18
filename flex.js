@@ -103,6 +103,11 @@ $(document).ready(function () {
 		}
 	})();
 
+	{
+		let time = new Time();
+	}
+	$dig.text(new Time().toString());
+
 	var interval = setInterval(function(){
 		var time = new Time();
 		$dig.text(time.toString());

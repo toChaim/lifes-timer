@@ -9,6 +9,9 @@
       header *{
         border: 1px dashed red;
       }
+      h1{
+        text-align: center;
+      }
       #dig{
         display: flex;
 
