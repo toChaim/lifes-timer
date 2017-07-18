@@ -2,6 +2,8 @@ $(document).ready(function () {
 	console.log("flex ready");
 
 	var $tfoot = $('tfoot');
+	var $dig = $('#dig');
+
 	var acts = (function(){
 		var arr = [];
 
@@ -101,10 +103,11 @@ $(document).ready(function () {
 		}
 	})();
 
-
-	$clock = $("#clock");
-	var time = new Time();
-	$("#dig").text(time.toString());
+	var interval = setInterval(function(){
+		var time = new Time();
+		$dig.text(time.toString());
+	}, 1000);
+	
 
 	//add act button click
 	$('#addact').on('click', function(){
