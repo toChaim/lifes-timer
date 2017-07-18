@@ -6,11 +6,23 @@
       	flex-direction: row;
       	justify-content: space-around;
       }
+      header *{
+        border: 1px dashed red;
+      }
+      #dig{
+        display: flex;
+
+        align-self: center;
+        font-family: monospace;
+        font-size: 1.5em;
+      }
       #clock{
       	display: flex;
-      	flex-basis: 100%;
+      	flex-basis: 30%;
 
-      	justify-content: space-around;
+        flex-direction: column;
+        flex-wrap: wrap;
+      	justify-content: flex-start;
       }
       main{
       	display: flex;
