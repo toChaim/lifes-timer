@@ -4,6 +4,55 @@ $(document).ready(function () {
 	var $tfoot = $('tfoot');
 	var $dig = $('#dig');
 
+	var time = {
+
+	};
+
+	var Time = (function(){
+		var seconds = 1000;
+		var minutes = 60 * seconds;
+		var hours = 60 * minutes;
+		var days = 24 * hours;
+		function leadZero(num){
+			if(num < 10) return "0" + num;
+			else return num;
+		}
+
+		return {
+		  toString: function(mills){
+		    if(mills === undefined){
+		      let dateObj = new Date();
+		      mills = dateObj.getTime() - dateObj.getTimezoneOffset() * 60000;
+		    }
+		    let t = mills % days;
+				var d = Math.floor(t/hours) + ":";
+				t %= hours;
+				d += leadZero(Math.floor(t/minutes)) + ":";
+				t %= minutes;
+				d += leadZero(Math.floor(t/seconds));
+				return d;
+		    
+		  },
+		  fromString: function(str){
+		    if(str === undefined){
+		      let dateObj = new Date();
+		      return dateObj.getTime() - dateObj.getTimezoneOffset() * 60000;
+		    }
+		    arr = str.split(':');
+				var d = arr[0]*hours;
+				d += arr[1]*minutes;
+				d += arr[2]*seconds;
+				return d;
+		  },
+		};
+	})();
+
+	$dig.text(Time.toString());
+
+	var interval = setInterval(function(){
+		$dig.text(Time.toString());
+	}, 1000);
+	
 	var acts = (function(){
 		var arr = [];
 
@@ -67,52 +116,6 @@ $(document).ready(function () {
 	})();
 
 	acts.display();
-
-	var Time = (function(){
-		var seconds = 1000;
-		var minutes = 60 * seconds;
-		var hours = 60 * minutes;
-		var days = 24 * hours;
-		function leadZero(num){
-			if(num < 10) return "0" + num;
-			else return num;
-		}
-
-		return function Time(mills = 0){
-			if(mills === 0){
-				{let dateObj;
-					dateObj = new Date();
-					this.mills = dateObj.getTime() - dateObj.getTimezoneOffset() * 60000;
-				}
-			}else{
-				this.mills = mills;
-			}
-
-			this.toString = function(){
-				var t = this.mills % days;
-				var d = Math.floor(t/hours) + ":";
-				t %= hours;
-				d += leadZero(Math.floor(t/minutes)) + ":";
-				t %= minutes;
-				d += leadZero(Math.floor(t/seconds));
-				return d;
-			};
-			this.fromString = function(){
-				return 0;
-			}
-		}
-	})();
-
-	{
-		let time = new Time();
-	}
-	$dig.text(new Time().toString());
-
-	var interval = setInterval(function(){
-		var time = new Time();
-		$dig.text(time.toString());
-	}, 1000);
-	
 
 	//add act button click
 	$('#addact').on('click', function(){
@@ -184,10 +187,10 @@ $(document).ready(function () {
 			id: 'actid' + this.id,
 			class: 'act',
 			html: '<td><input type="checkbox" class="done"></td>'
-			+ '<td class="stime">' + this.sTime + '</td>'
+			+ '<td class="stime">' + Time.toString(this.sTime) + '</td>'
 			+ '<td><input type="checkbox" class="fixed"></td>'
 			+ '<td class="actname">' + this.name + '</td>'
-			+ '<td class="dtime">' + this.dTime + '</td>'
+			+ '<td class="dtime">' + Time.toString(this.dTime) + '</td>'
 			},);
 		if(this.done){
 			this.$obj.find('.done').prop('checked', true);
