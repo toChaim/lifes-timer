@@ -3,10 +3,9 @@ $(document).ready(function () {
 
 	var $tfoot = $('tfoot');
 	var $dig = $('#dig');
-
-	var time = {
-
-	};
+	var $current;
+	var $currentName = $('#currentname');
+	var $currentTime = $('#currenttime');
 
 	var Time = (function(){
 		var seconds = 1000;
@@ -50,7 +49,11 @@ $(document).ready(function () {
 	$dig.text(Time.toString());
 
 	var interval = setInterval(function(){
+
 		$dig.text(Time.toString());
+		let time = Time.fromString($currentTime.text()) - 1000;
+		$currentTime.text(Time.toString(time));
+
 	}, 1000);
 	
 	var acts = (function(){
@@ -80,8 +83,7 @@ $(document).ready(function () {
 
 				for(let a of old){
 					if(a.hasOwnProperty('$obj')){
-						//console.log(a);
-						//actName, done, dTime, fixed, sTime
+						//actName, done, dTime
 						let newAct = new Act(
 							a.name, 
 							a.done, 
@@ -119,7 +121,7 @@ $(document).ready(function () {
 	$('#addact').on('click', function(){
 		event.stopPropagation();
 
-		//actName, done, dTime, fixed, sTime
+		//actName, done, dTime
 		var newAct = new Act(
 			$('#newact').val(),
 			false, //done
@@ -166,7 +168,6 @@ $(document).ready(function () {
 		let $this = $(this);
 
 		$this.attr('checked', !$this.is(':checked'));
-		//$this.parent().siblings('.actname').toggleClass('crossout');
 		
 		let index = parseInt($this.parent().parent().attr('id').substring(5));
 		let act = acts.get(index);
