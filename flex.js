@@ -125,7 +125,7 @@ $(document).ready(function () {
 		var newAct = new Act(
 			$('#newact').val(),
 			false, //done
-			$('#newdtime').val(),
+			Time.fromString($('#newdtime').val()),
 			$('#newfixed').is(':checked'),
 			$('#newstime').val(),
 		);
