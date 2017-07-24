@@ -86,8 +86,6 @@ $(document).ready(function () {
 							a.name, 
 							a.done, 
 							parseInt(a.dTime),
-							a.fixed,
-							parseInt(a.sTime),
 						);
 						$tfoot.before(newAct.$obj);					
 					}else{
@@ -176,19 +174,15 @@ $(document).ready(function () {
 		acts.save();
 	});
 
-	function Act(actName, done = false, dTime = 18000, fixed = false, sTime = 0) {
+	function Act(actName, done = false, dTime = 18000) {
 		this.id = acts.length();
 		this.name = actName;
 		this.done = done;
 		this.dTime = dTime;
-		this.fixed = fixed;
-		this.sTime = sTime;
 		this.$obj = $('<tr>', {
 			id: 'actid' + this.id,
 			class: 'act',
 			html: '<td><input type="checkbox" class="done"></td>'
-			+ '<td class="stime">' + Time.toString(this.sTime) + '</td>'
-			+ '<td><input type="checkbox" class="fixed"></td>'
 			+ '<td class="actname">' + this.name + '</td>'
 			+ '<td class="dtime">' + Time.toString(this.dTime) + '</td>'
 			},);
