@@ -3,7 +3,7 @@ $(document).ready(function () {
 
 	var $tfoot = $('tfoot');
 	var $dig = $('#dig');
-	var $current;
+	var $current = 0;
 	var $currentName = $('#currentname');
 	var $currentTime = $('#currenttime');
 
@@ -47,11 +47,27 @@ $(document).ready(function () {
 	})();
 
 	$dig.text(Time.toString());
+	$currentName.text($('#actid0').children(' .actname').eq(0).text());
+	$currentTime.text($('#actid0').children(' .dtime').eq(0).text());
 
 	var interval = setInterval(function(){
 
 		$dig.text(Time.toString());
 		let time = Time.fromString($currentTime.text()) - 1000;
+		//check for new current
+		if(time <= 0){
+
+			var $acts = $('#lists .act');
+
+			let noNext = ($acts.length === 0) ; 
+			if(noNext){
+				time = Time.fromString('0:05:00');
+			}
+				
+			//cases no current
+			// no next
+
+		}
 		$currentTime.text(Time.toString(time));
 
 	}, 1000);
