@@ -78,7 +78,9 @@ $(document).ready(function(){
 						.addClass('act')
 						.html(
 							'<input type="text" class="aname" value="' + acts[i].name + '">' 
-							+ '<input type="text" class="atime" value="' + acts[i].time + '">')
+							+ '<input type="text" class="atime" value="' + acts[i].time + '">'
+							+ '<span class="aendtime">0:00:00</span>'
+							+ '<input type="checkbox" class="adone">')
 					);
 				}
 
@@ -96,18 +98,26 @@ $(document).ready(function(){
 	$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
 
 	var interval = setInterval(function () {
+		//update time of day
 		$dig.text(Time.toString());
-		
-		var time = Time.fromString($ctime.text()) - 1000;
-		if(time <= 0){
+		//update remanining time in current activity
+		var totalTime = Time.fromString($ctime.text()) - 1000;
+		if(totalTime <= 0){
 			current += 1;
 			if(current >= $('.act').length){ current = 0; }
 				$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
 				$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
+				totalTime = Time.fromString($ctime.text());
 		}else{
-			$ctime.text( Time.toString( time ));
+			$ctime.text( Time.toString( totalTime ));
 		}
-
+		//update future activities
+		totalTime += Time.fromString();
+		for(let i = current; i < $('.act').length; i++){
+			if(i > current) 
+				totalTime += Time.fromString($('#act' + i + ' .atime').eq(0).val());
+			$('#act' + i + ' .aendtime').eq(0).text(Time.toString(totalTime));
+		}
 		
 	},1000);
 
@@ -122,6 +132,9 @@ $(document).ready(function(){
 		schedule.save();
 	});
 	$('#addbtn').on('click', function(){
+		if($('#addname').val() === '') return;
+		if(isNaN(Time.fromString($('#addtime').val()))) return;
+
 		let i = $('.act').length;
 
 		$list.append($('<div>')
@@ -129,7 +142,9 @@ $(document).ready(function(){
 			.addClass('act')
 			.html(
 				'<input type="text" class="aname" value="' + $('#addname').val() + '">' 
-				+ '<input type="text" class="atime" value="' + $('#addtime').val() + '">')
+				+ '<input type="text" class="atime" value="' + $('#addtime').val() + '">'
+				+ '<span class="aendtime">0:00:00</span>'
+				+ '<input type="checkbox" class="adone">')
 		);
 	});
 });
