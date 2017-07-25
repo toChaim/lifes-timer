@@ -79,7 +79,7 @@ $(document).ready(function(){
 						.html(
 							'<input type="text" class="aname" value="' + acts[i].name + '">' 
 							+ '<input type="text" class="atime" value="' + acts[i].time + '">')
-						);
+					);
 				}
 
 			},
@@ -120,5 +120,16 @@ $(document).ready(function(){
 	//click events
 	$('#savebtn').on('click', function(){
 		schedule.save();
+	});
+	$('#addbtn').on('click', function(){
+		let i = $('.act').length;
+
+		$list.append($('<div>')
+			.attr('id', 'act' + i)
+			.addClass('act')
+			.html(
+				'<input type="text" class="aname" value="' + $('#addname').val() + '">' 
+				+ '<input type="text" class="atime" value="' + $('#addtime').val() + '">')
+		);
 	});
 });
