@@ -103,6 +103,7 @@ $(document).ready(function(){
 	schedule.load();
 	$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
 	$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
+	$('#act' + current).toggleClass('bg-info');
 
 	var interval = setInterval(function () {
 		//update time of day
@@ -110,7 +111,9 @@ $(document).ready(function(){
 		//update remanining time in current activity
 		var totalTime = Time.fromString($ctime.text()) - 1000;
 		if(totalTime <= 0){
+			$('#act' + current).toggleClass('bg-info');
 			current += 1;
+			$('#act' + current).toggleClass('bg-info');
 			if(current >= $('.act').length){ current = 0; }
 				$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
 				$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
