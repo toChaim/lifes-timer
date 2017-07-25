@@ -51,7 +51,6 @@ $(document).ready(function(){
 
 		return {
 			save: function(scheduleName = 'defaultSchedule'){
-				console.log(scheduleName);
 				var $acts = $('.act');
 				var acts = [];
 
@@ -65,7 +64,6 @@ $(document).ready(function(){
 				localStorage.setItem(scheduleName, JSON.stringify(acts));
 			},
 			load: function(scheduleName = 'defaultSchedule'){
-				console.log(scheduleName);
 				var acts = JSON.parse(localStorage.getItem(scheduleName));
 				if(acts === null || acts.length === 0){
 					acts = [
@@ -75,7 +73,6 @@ $(document).ready(function(){
 				}
 
 				for(let i = 0; i< acts.length; i++){
-					console.log(acts[i]);
 					$list.append($('<div>')
 						.attr('id', 'act' + i)
 						.addClass('act')
@@ -104,7 +101,7 @@ $(document).ready(function(){
 		var time = Time.fromString($ctime.text()) - 1000;
 		if(time <= 0){
 			current += 1;
-			if(current >= $('.act').lengt){ current = 0}
+			if(current >= $('.act').length){ current = 0; }
 				$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
 				$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
 		}else{
