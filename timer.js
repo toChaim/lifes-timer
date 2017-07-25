@@ -138,6 +138,14 @@ $(document).ready(function(){
 	$('#savebtn').on('click', function(){
 		schedule.save();
 	});
+	$('#resetbtn').on('click', function(){
+		$('.act').remove();
+		schedule.load(null);
+		current = 0;
+		$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
+		$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
+
+	});
 	$('#addbtn').on('click', function(){
 		if($('#addname').val() === '') return;
 		if(isNaN(Time.fromString($('#addtime').val()))) return;
