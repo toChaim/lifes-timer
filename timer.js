@@ -43,6 +43,13 @@ $(document).ready(function(){
 				d += arr[2]*seconds;
 				return d;
 		  },
+		  moreOrLess: function (mills) {
+		  	if(mills > 5 * hours) return 30 * minutes;
+		  	if(mills > 2 * hours) return 15 * minutes;
+		  	if(mills > 30 * minutes) return 10 * minutes;
+		  	if(mills > 10* minutes) return 5 * minutes;
+		  	return 30 * seconds;
+		  }
 		};
 	})();
 
@@ -146,5 +153,15 @@ $(document).ready(function(){
 				+ '<span class="aendtime">0:00:00</span>'
 				+ '<input type="checkbox" class="adone">')
 		);
+	});
+	$('#moretimebtn').on('click', function(){
+		var mills = Time.fromString($ctime.text());
+		mills += Time.moreOrLess(mills);
+		$ctime.text(Time.toString(mills));
+	});
+	$('#lesstimebtn').on('click', function(){
+		var mills = Time.fromString($ctime.text());
+		mills -= Time.moreOrLess(mills);
+		$ctime.text(Time.toString(mills));
 	});
 });
