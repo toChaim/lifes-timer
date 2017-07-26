@@ -4,6 +4,7 @@ $(document).ready(function(){
 	var $cname = $('#cname');
 	var $ctime = $('#ctime');
 	var $list = $('#list');
+	var $listFoot = $('#addform');
 	var current = 0;
 
 	//Time related functions
@@ -80,14 +81,14 @@ $(document).ready(function(){
 				}
 
 				for(let i = 0; i< acts.length; i++){
-					$list.append($('<div>')
+					$listFoot.before($('<tr>')
 						.attr('id', 'act' + i)
 						.addClass('act')
 						.html(
-							'<input type="text" class="aname" value="' + acts[i].name + '">' 
-							+ '<input type="text" class="atime" value="' + acts[i].time + '">'
-							+ '<span class="aendtime">0:00:00</span>'
-							+ '<input type="checkbox" class="adone">')
+							'<td><input type="text" class="aname" value="' + acts[i].name + '"></td>' 
+							+ '<td><input type="text" class="atime" value="' + acts[i].time + '"></td>'
+							+ '<td class="aendtime">0:00:00</td>'
+							+ '<td><input type="checkbox" class="adone"></td>')
 					);
 				}
 
@@ -103,7 +104,7 @@ $(document).ready(function(){
 	schedule.load();
 	$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
 	$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
-	$('#act' + current).toggleClass('bg-info');
+	$('#act' + current).toggleClass('active');
 
 	var interval = setInterval(function () {
 		//update time of day
@@ -111,9 +112,9 @@ $(document).ready(function(){
 		//update remanining time in current activity
 		var totalTime = Time.fromString($ctime.text()) - 1000;
 		if(totalTime <= 0){
-			$('#act' + current).toggleClass('bg-info');
+			$('#act' + current).toggleClass('active');
 			current += 1;
-			$('#act' + current).toggleClass('bg-info');
+			$('#act' + current).toggleClass('active');
 			if(current >= $('.act').length){ current = 0; }
 				$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
 				$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
@@ -155,14 +156,14 @@ $(document).ready(function(){
 
 		let i = $('.act').length;
 
-		$list.append($('<div>')
+		$listFoot.before($('<tr>')
 			.attr('id', 'act' + i)
 			.addClass('act')
 			.html(
-				'<input type="text" class="aname" value="' + $('#addname').val() + '">' 
-				+ '<input type="text" class="atime" value="' + $('#addtime').val() + '">'
-				+ '<span class="aendtime">0:00:00</span>'
-				+ '<input type="checkbox" class="adone">')
+				'<td><input type="text" class="aname" value="' + $('#addname').val() + '"></td>' 
+				+ '<td><input type="text" class="atime" value="' + $('#addtime').val() + '"></td>'
+				+ '<td class="aendtime">0:00:00</td>'
+				+ '<td><input type="checkbox" class="adone"></td>')
 		);
 	});
 	$('#moretimebtn').on('click', function(){
