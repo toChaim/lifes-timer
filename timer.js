@@ -81,15 +81,7 @@ $(document).ready(function(){
 				}
 
 				for(let i = 0; i< acts.length; i++){
-					$listFoot.before($('<tr>')
-						.attr('id', 'act' + i)
-						.addClass('act')
-						.html(
-							'<td><input type="text" class="aname" value="' + acts[i].name + '"></td>' 
-							+ '<td><input type="text" class="atime" value="' + acts[i].time + '"></td>'
-							+ '<td class="aendtime">0:00:00</td>'
-							+ '<td><input type="checkbox" class="adone"></td>')
-					);
+					$listFoot.before( displayAct(acts[i].name, acts[i].time, i));
 				}
 
 			},
@@ -127,7 +119,7 @@ $(document).ready(function(){
 		for(let i = current; i < $('.act').length; i++){
 			if(i > current) 
 				totalTime += Time.fromString($('#act' + i + ' .atime').eq(0).val());
-			$('#act' + i + ' .aendtime').eq(0).text(Time.toString(totalTime));
+			$('#act' + i + ' .astarttime').eq(0).text(Time.toString(totalTime));
 		}
 		
 	},1000);
@@ -136,6 +128,22 @@ $(document).ready(function(){
 	function Act(name, time){
 		this.name = name;
 		this.time = time;
+	}
+
+	function displayAct(name, time, idnum){
+		return $('<div>')
+					.attr('id', 'act' + idnum)
+					.addClass('act row col-sx-12')
+					.html(
+						'<div class="col-xs-12 col-md-4">'
+						+ '<span><input type="checkbox" class="adone  col-xs-2"></span>'
+						+ '<span class="astarttime col-xs-offset-1 col-xs-6">0:00:00</span>'
+						+ '</div>'
+						+ '<div class="col-xs-12 col-md-8"' 
+						+ '<span><input type="text" class="aname col-xs-6" value="' + name + '"></span>' 
+						+ '<span><input type="text" class="atime col-xs-6" value="' + time + '"></span>'
+						+ '</div>'
+);
 	}
 
 	//click events
@@ -156,15 +164,7 @@ $(document).ready(function(){
 
 		let i = $('.act').length;
 
-		$listFoot.before($('<tr>')
-			.attr('id', 'act' + i)
-			.addClass('act')
-			.html(
-				'<td><input type="text" class="aname" value="' + $('#addname').val() + '"></td>' 
-				+ '<td><input type="text" class="atime" value="' + $('#addtime').val() + '"></td>'
-				+ '<td class="aendtime">0:00:00</td>'
-				+ '<td><input type="checkbox" class="adone"></td>')
-		);
+		$listFoot.before( displayAct($('#addname').val(), $('#addtime').val(), i));
 	});
 	$('#moretimebtn').on('click', function(){
 		var mills = Time.fromString($ctime.text());
@@ -174,6 +174,7 @@ $(document).ready(function(){
 	$('#lesstimebtn').on('click', function(){
 		var mills = Time.fromString($ctime.text());
 		mills -= Time.moreOrLess(mills);
+		if(mills <= 0) mills = 10000;
 		$ctime.text(Time.toString(mills));
 	});
 });
