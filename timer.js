@@ -137,7 +137,7 @@ $(document).ready(function(){
 					.addClass('act row col-sx-12')
 					.html(
 						'<div class="col-xs-12 col-md-4">'
-						+ '<span><input type="checkbox" class="adone  col-xs-2"></span>'
+						+ '<span><input type="checkbox" class="adone col-xs-2"></span>'
 						+ '<span class="astarttime col-xs-offset-1 col-xs-6">0:00:00</span>'
 						+ '</div>'
 						+ '<div class="col-xs-12 col-md-8"' 
@@ -169,8 +169,8 @@ $(document).ready(function(){
 		if(mills <= 0) mills = 10000;
 		$ctime.text(Time.toString(mills));
 	});
-	$('#list').on('click', '.done', function(){
-		
+	$('#list').on('click', '.adone', function(){
+		$(this).parents('.act').find('input').toggleClass('finished');
 	});
 	$('#addbtn').on('click', function(){
 		if($('#addname').val() === '') return;
