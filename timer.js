@@ -96,7 +96,7 @@ $(document).ready(function(){
 	schedule.load();
 	$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
 	$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
-	$('#act' + current).toggleClass('active');
+	$('#act' + current).toggleClass('bg-warning');
 
 	var interval = setInterval(function () {
 		//update time of day
@@ -104,10 +104,10 @@ $(document).ready(function(){
 		//update remanining time in current activity
 		var totalTime = Time.fromString($ctime.text()) - 1000;
 		if(totalTime <= 0){
-			$('#act' + current).toggleClass('active');
+			$('#act' + current).toggleClass('bg-warning');
 			current += 1;
-			$('#act' + current).toggleClass('active');
 			if(current >= $('.act').length){ current = 0; }
+			$('#act' + current).toggleClass('bg-warning');
 				$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
 				$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
 				totalTime = Time.fromString($ctime.text());
@@ -117,8 +117,9 @@ $(document).ready(function(){
 		//update future activities
 		totalTime += Time.fromString();
 		for(let i = current; i < $('.act').length; i++){
-			if(i > current) 
+			if(i > current) {
 				totalTime += Time.fromString($('#act' + i + ' .atime').eq(0).val());
+			}
 			$('#act' + i + ' .astarttime').eq(0).text(Time.toString(totalTime));
 		}
 		
@@ -142,8 +143,7 @@ $(document).ready(function(){
 						+ '<div class="col-xs-12 col-md-8"' 
 						+ '<span><input type="text" class="aname col-xs-6" value="' + name + '"></span>' 
 						+ '<span><input type="text" class="atime col-xs-6" value="' + time + '"></span>'
-						+ '</div>'
-);
+						+ '</div>');
 	}
 
 	//click events
@@ -158,14 +158,6 @@ $(document).ready(function(){
 		$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
 
 	});
-	$('#addbtn').on('click', function(){
-		if($('#addname').val() === '') return;
-		if(isNaN(Time.fromString($('#addtime').val()))) return;
-
-		let i = $('.act').length;
-
-		$listFoot.before( displayAct($('#addname').val(), $('#addtime').val(), i));
-	});
 	$('#moretimebtn').on('click', function(){
 		var mills = Time.fromString($ctime.text());
 		mills += Time.moreOrLess(mills);
@@ -176,5 +168,16 @@ $(document).ready(function(){
 		mills -= Time.moreOrLess(mills);
 		if(mills <= 0) mills = 10000;
 		$ctime.text(Time.toString(mills));
+	});
+	$('#list').on('click', '.done', function(){
+		
+	});
+	$('#addbtn').on('click', function(){
+		if($('#addname').val() === '') return;
+		if(isNaN(Time.fromString($('#addtime').val()))) return;
+
+		let i = $('.act').length;
+
+		$listFoot.before( displayAct($('#addname').val(), $('#addtime').val(), i));
 	});
 });
