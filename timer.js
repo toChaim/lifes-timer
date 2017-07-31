@@ -65,7 +65,9 @@ $(document).ready(function(){
 				for(let i =0; i < $acts.length; i++){
 					acts.push( new Act(
 						$acts.eq(i).find('.aname').eq(0).val(),
-						$acts.eq(i).find('.atime').eq(0).val()
+						$acts.eq(i).find('.atime').eq(0).val(),
+						$acts.eq(i).find('.adone').eq(0).is(':checked'),
+						$acts.eq(i).find('.afixedtime').eq(0).val(),
 						) );
 				}
 
@@ -75,13 +77,13 @@ $(document).ready(function(){
 				var acts = JSON.parse(localStorage.getItem(scheduleName));
 				if(acts === null || acts.length === 0){
 					acts = [
-						new Act('Work', '0:25:00'),
-						new Act('Rest', '0:05:00')
+						new Act('Work', '0:25:00', false, ''),
+						new Act('Rest', '0:05:00', false, '')
 					];
 				}
 
 				for(let i = 0; i< acts.length; i++){
-					$listFoot.before( displayAct(acts[i].name, acts[i].time, i));
+					$listFoot.before( displayAct(acts[i].name, acts[i].time, i, acts[i].done, acts[i].fixedtime));
 				}
 
 			},
@@ -97,6 +99,7 @@ $(document).ready(function(){
 	$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
 	$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
 	$('#act' + current).toggleClass('bg-warning');
+	$('#act' + current + ' .astarttime').eq(0).text(Time.toString());
 
 	var interval = setInterval(function () {
 		//update time of day
@@ -110,40 +113,56 @@ $(document).ready(function(){
 			$('#act' + current).toggleClass('bg-warning');
 				$cname.text($list.find('#act' + current + ' .aname').eq(0).val());
 				$ctime.text($list.find('#act' + current + ' .atime').eq(0).val());
+				$('#act' + current + ' .astarttime').eq(0).text(Time.toString());
 				totalTime = Time.fromString($ctime.text());
 		}else{
 			$ctime.text( Time.toString( totalTime ));
 		}
 		//update future activities
-		totalTime += Time.fromString();
-		for(let i = current; i < $('.act').length; i++){
-			if(i > current) {
-				totalTime += Time.fromString($('#act' + i + ' .atime').eq(0).val());
-			}
+		totalTime  += Time.fromString();
+		for(let i = current + 1; i <= $('.act').length - 1; i++){
 			$('#act' + i + ' .astarttime').eq(0).text(Time.toString(totalTime));
+			totalTime += Time.fromString($('#act' + i + ' .atime').eq(0).val());
 		}
 		
 	},1000);
 
 	//act constructor
-	function Act(name, time){
+	function Act(name, time, done, fixedtime){
 		this.name = name;
 		this.time = time;
+		this.done = done;
+		this.fixedtime = fixedtime;
 	}
 
-	function displayAct(name, time, idnum){
+	function displayAct(name, time, idnum, done, fixedtime){
+		var html = '';
+
+			if(fixedtime){
+				html += '<div class="col-xs-12 col-md-4">'
+				+ '<span class="astarttime col-xs-offset-1 col-xs-6">0:00:00</span>'
+				+ '</div>'
+				+ '<div class="col-xs-12 col-md-8"' 
+				+ '<span><input type="text" class="aname col-xs-6" value="Squish"></span>' 
+				+ '<span><input type="text" class="atime col-xs-6" value="' + fixedtime + '"></span>'
+				+ '</div>';
+			}
+
+			html += '<div class="col-xs-12 col-md-4">'
+			+ '<span><input type="checkbox" class="adone col-xs-2"'
+			+ (done? 'checked="true"': '')
+			+'></span>'
+			+ '<span class="astarttime col-xs-offset-1 col-xs-6">0:00:00</span>'
+			+ '</div>'
+			+ '<div class="col-xs-12 col-md-8"' 
+			+ '<span><input type="text" class="aname col-xs-6" value="' + name + '"></span>' 
+			+ '<span><input type="text" class="atime col-xs-6" value="' + time + '"></span>'
+			+ '</div>';
+
 		return $('<div>')
-					.attr('id', 'act' + idnum)
-					.addClass('act row col-sx-12')
-					.html(
-						'<div class="col-xs-12 col-md-4">'
-						+ '<span><input type="checkbox" class="adone col-xs-2"></span>'
-						+ '<span class="astarttime col-xs-offset-1 col-xs-6">0:00:00</span>'
-						+ '</div>'
-						+ '<div class="col-xs-12 col-md-8"' 
-						+ '<span><input type="text" class="aname col-xs-6" value="' + name + '"></span>' 
-						+ '<span><input type="text" class="atime col-xs-6" value="' + time + '"></span>'
-						+ '</div>');
+			.attr('id', 'act' + idnum)
+			.addClass('act row col-sx-12')
+			.html(html);
 	}
 
 	//click events
@@ -178,6 +197,6 @@ $(document).ready(function(){
 
 		let i = $('.act').length;
 
-		$listFoot.before( displayAct($('#addname').val(), $('#addtime').val(), i));
+		$listFoot.before( displayAct($('#addname').val(), $('#addtime').val(), i), false, $('#addfixed'));
 	});
 });
